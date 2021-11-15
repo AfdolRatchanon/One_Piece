@@ -11,8 +11,24 @@ class addAddCharacter extends StatefulWidget {
 }
 
 class _addAddCharacterState extends State<addAddCharacter> {
-  var nameCharacter;
-  var urlPicture;
+  var nameCharacter,
+      urlPicture,
+      nameEng,
+      debut,
+      affiliation,
+      occupation,
+      homeTown,
+      nickname,
+      birthDate,
+      oldYear,
+      hight,
+      gBlood,
+      bounty,
+      status,
+      dFruitEng,
+      dFruitTh,
+      powerFruit,
+      typeFruit;
   final formKey = GlobalKey<FormState>();
   final dbFirebase = FirebaseDatabase.instance.reference().child('Group');
 
@@ -20,6 +36,22 @@ class _addAddCharacterState extends State<addAddCharacter> {
     await dbFirebase.child(key).child('character').push().set({
       'nameCharacter': nameCharacter,
       'urlPicture': urlPicture,
+      'debut': debut,
+      'affiliation': affiliation,
+      'nameEng': nameEng,
+      'occupation': occupation,
+      'homeTown': homeTown,
+      'nickname': nickname,
+      'birthDate': birthDate,
+      'oldYear': oldYear,
+      'hight': hight,
+      'gBlood': gBlood,
+      'bounty': bounty,
+      'status': status,
+      'dFruitEng': dFruitEng,
+      'dFruitTh': dFruitTh,
+      'powerFruit': powerFruit,
+      'typeFruit': typeFruit,
     }).then((dynamic value) {
       print(value);
       showDialog<String>(
@@ -51,8 +83,150 @@ class _addAddCharacterState extends State<addAddCharacter> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                txtnameCharacter(),
-                txtUrlPicture(),
+                txtFmFd(
+                  "ชื่อภาษาไทย",
+                  Icon(Icons.account_circle_outlined),
+                  "กรุณากรอกชื่อภาษาไทย",
+                  (String? value) {
+                    nameCharacter = value!.trim();
+                  },
+                ),
+                txtFmFd(
+                  "Url Picture",
+                  Icon(Icons.image),
+                  "กรุณากรอก Url Picture",
+                  (String? value) {
+                    urlPicture = value!.trim();
+                  },
+                ),
+                txtFmFd(
+                  "ชื่อภาษาอังกฤษ",
+                  Icon(Icons.account_circle_outlined),
+                  "กรุณากรอกชื่อชื่อภาษาอังกฤษ",
+                  (String? value) {
+                    nameEng = value!.trim();
+                  },
+                ),
+                txtFmFd(
+                  "วันเปิดตัว",
+                  Icon(Icons.access_time),
+                  "กรุณากรอกวันเปิดตัว",
+                  (String? value) {
+                    debut = value!.trim();
+                  },
+                ),
+                txtFmFd(
+                  "สังกัด",
+                  Icon(Icons.account_tree_sharp),
+                  "กรุณากรอกชื่อชื่อสังกัด",
+                  (String? value) {
+                    affiliation = value!.trim();
+                  },
+                ),
+                txtFmFd(
+                  "อาชีพ",
+                  Icon(Icons.apartment_outlined),
+                  "กรุณากรอกอาชีพ",
+                  (String? value) {
+                    occupation = value!.trim();
+                  },
+                ),
+                txtFmFd(
+                  "บ้านเกิด",
+                  Icon(Icons.home),
+                  "กรุณากรอกบ้านเกิด",
+                  (String? value) {
+                    homeTown = value!.trim();
+                  },
+                ),
+                txtFmFd(
+                  "ฉายา",
+                  Icon(Icons.home),
+                  "กรุณากรอกฉายา",
+                  (String? value) {
+                    nickname = value!.trim();
+                  },
+                ),
+                txtFmFd(
+                  "วันเกิด",
+                  Icon(Icons.access_time_filled_outlined),
+                  "กรุณากรอกวันเกิด",
+                  (String? value) {
+                    birthDate = value!.trim();
+                  },
+                ),
+                txtFmFd(
+                  "อายุ",
+                  Icon(Icons.accessibility_sharp),
+                  "กรุณากรอกอายุ",
+                  (String? value) {
+                    oldYear = value!.trim();
+                  },
+                ),
+                txtFmFd(
+                  "ส่วนสูง",
+                  Icon(Icons.format_line_spacing_outlined),
+                  "กรุณากรอกส่วนสูง",
+                  (String? value) {
+                    hight = value!.trim();
+                  },
+                ),
+                txtFmFd(
+                  "หมู่เลือด",
+                  Icon(Icons.assignment_ind),
+                  "กรุณากรอกหมู่เลือด",
+                  (String? value) {
+                    gBlood = value!.trim();
+                  },
+                ),
+                txtFmFd(
+                  "ค่าหัว",
+                  Icon(Icons.attach_money),
+                  "กรุณากรอกค่าหัว",
+                  (String? value) {
+                    bounty = value!.trim();
+                  },
+                ),
+                txtFmFd(
+                  "สถานะ",
+                  Icon(Icons.badge_outlined),
+                  "กรุณากรอกสถานะ",
+                  (String? value) {
+                    status = value!.trim();
+                  },
+                ),
+                txtFmFd(
+                  "ผลปีศาจ ภาษาอังกฤษ",
+                  Icon(Icons.colorize),
+                  "กรุณากรอกผลปีศาจ ภาษาอังกฤษ",
+                  (String? value) {
+                    dFruitEng = value!.trim();
+                  },
+                ),
+                txtFmFd(
+                  "ผลปีศาจ ภาษาไทย",
+                  Icon(Icons.colorize),
+                  "กรุณากรอกผลปีศาจ ภาษาไทย",
+                  (String? value) {
+                    dFruitTh = value!.trim();
+                  },
+                ),
+                txtFmFd(
+                  "พลังผลปีศาจ",
+                  Icon(Icons.colorize),
+                  "กรุณากรอกพลังผลปีศาจ",
+                  (String? value) {
+                    powerFruit = value!.trim();
+                  },
+                ),
+                txtFmFd(
+                  "สายผลปีศาจ",
+                  Icon(Icons.flash_on),
+                  "กรุณากรอกสายผลปีศาจ",
+                  (String? value) {
+                    typeFruit = value!.trim();
+                  },
+                ),
                 btnSubmit(keyIn.key.toString()),
               ],
             ),
@@ -62,7 +236,7 @@ class _addAddCharacterState extends State<addAddCharacter> {
     );
   }
 
-  Widget txtnameCharacter() {
+  Widget txtFmFd(String title, Icon icon, String hintText, dynamic varOnSave) {
     return Container(
       margin: EdgeInsets.fromLTRB(10, 20, 10, 10),
       child: TextFormField(
@@ -71,47 +245,18 @@ class _addAddCharacterState extends State<addAddCharacter> {
           color: pColor,
         ),
         decoration: InputDecoration(
-          labelText: 'character Group:',
-          icon: Icon(Icons.account_circle_outlined),
-          hintText: 'Input your Name Group',
+          labelText: title,
+          icon: icon,
+          hintText: hintText,
         ),
         validator: (String? value) {
           if (value!.isEmpty) {
-            return 'กรุณากรอกชื่อปรเเภท';
-          } else if (value.length < 2) {
-            return "กรุณากรอกข้อมูลมากกว่า 2 ตัวอักษร";
-          }
-        },
-        onSaved: (String? value) {
-          nameCharacter = value!.trim();
-        },
-      ),
-    );
-  }
-
-  Widget txtUrlPicture() {
-    return Container(
-      margin: EdgeInsets.fromLTRB(10, 20, 10, 10),
-      child: TextFormField(
-        style: TextStyle(
-          fontSize: 24.0,
-          color: pColor,
-        ),
-        decoration: InputDecoration(
-          labelText: 'Url Picture:',
-          icon: Icon(Icons.account_circle_outlined),
-          hintText: 'Input your Url Picture',
-        ),
-        validator: (String? value) {
-          if (value!.isEmpty) {
-            return 'กรุณากรอกชื่อปรเเภท';
+            return 'กรุณากรอกข้อมูล';
           } else if (value.length < 1) {
             return "กรุณากรอกข้อมูลมากกว่า 1 ตัวอักษร";
           }
         },
-        onSaved: (String? value) {
-          urlPicture = value!.trim();
-        },
+        onSaved: varOnSave,
       ),
     );
   }

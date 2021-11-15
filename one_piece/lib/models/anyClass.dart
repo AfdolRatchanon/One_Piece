@@ -27,6 +27,51 @@ class sendTwoKeyTwoProperty {
   const sendTwoKeyTwoProperty(this.pKey, this.sKey, this.name, this.url);
 }
 
+class sendTwoKey18Property {
+  final String pKey,
+      sKey,
+      nameCharacter,
+      urlPicture,
+      nameEng,
+      debut,
+      affiliation,
+      occupation,
+      homeTown,
+      nickname,
+      birthDate,
+      oldYear,
+      hight,
+      gBlood,
+      bounty,
+      status,
+      dFruitEng,
+      dFruitTh,
+      powerFruit,
+      typeFruit;
+  const sendTwoKey18Property(
+    this.pKey,
+    this.sKey,
+    this.nameCharacter,
+    this.urlPicture,
+    this.nameEng,
+    this.debut,
+    this.affiliation,
+    this.occupation,
+    this.homeTown,
+    this.nickname,
+    this.birthDate,
+    this.oldYear,
+    this.hight,
+    this.gBlood,
+    this.bounty,
+    this.status,
+    this.dFruitEng,
+    this.dFruitTh,
+    this.powerFruit,
+    this.typeFruit,
+  );
+}
+
 Widget drawerAppBar() {
   return Drawer(
     child: ListView(

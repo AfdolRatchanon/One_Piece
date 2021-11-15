@@ -33,11 +33,12 @@ class _viewCharacterState extends State<viewCharacter> {
                       alignment: Alignment.topCenter,
                       child: Column(
                         children: [
-                          viewBtn('${snapshot.value['nameCharacter']}',
-                              '${snapshot.value['urlPicture']}', size, 30, () {
-                            Navigator.pushNamed(context, 'addCharacter',
-                                arguments: sendOneKey('${snapshot.key}'));
-                          }),
+                          viewBtn(
+                              '${snapshot.value['nameCharacter']}',
+                              '${snapshot.value['urlPicture']}',
+                              size,
+                              30,
+                              () => {}),
                           ListTile(
                             title: Text('character Name : ' +
                                 '${snapshot.value['nameCharacter']}'),
@@ -47,19 +48,35 @@ class _viewCharacterState extends State<viewCharacter> {
                                   child: IconButton(
                                     icon: Icon(Icons.mode_edit_outlined),
                                     onPressed: () {
-                                      // print("แก้ไข");
-                                      // print(snapshot.key!);
-                                      // keycharacter = '${snapshot.key!}';
-                                      // Navigator.pushNamed(
-                                      //   context,
-                                      //   'editCharacter',
-                                      //   arguments: sendTwoKeyTwoProperty(
-                                      //     keyIn.key.toString(),
-                                      //     keycharacter,
-                                      //     snapshot.value['nameCharacter'],
-                                      //     snapshot.value['urlPicture'],
-                                      //   ),
-                                      // );
+                                      print("แก้ไข");
+                                      print(snapshot.key!);
+                                      keycharacter = '${snapshot.key!}';
+                                      Navigator.pushNamed(
+                                        context,
+                                        'editCharacter',
+                                        arguments: sendTwoKey18Property(
+                                          keyIn.key.toString(),
+                                          keycharacter,
+                                          snapshot.value['nameCharacter'],
+                                          snapshot.value['urlPicture'],
+                                          snapshot.value['nameEng'],
+                                          snapshot.value['debut'],
+                                          snapshot.value['affiliation'],
+                                          snapshot.value['occupation'],
+                                          snapshot.value['homeTown'],
+                                          snapshot.value['nickname'],
+                                          snapshot.value['birthDate'],
+                                          snapshot.value['oldYear'],
+                                          snapshot.value['hight'],
+                                          snapshot.value['gBlood'],
+                                          snapshot.value['bounty'],
+                                          snapshot.value['status'],
+                                          snapshot.value['dFruitEng'],
+                                          snapshot.value['dFruitTh'],
+                                          snapshot.value['powerFruit'],
+                                          snapshot.value['typeFruit'],
+                                        ),
+                                      );
                                       //updateData(snapshot.key!);
                                     },
                                   ),
@@ -83,6 +100,7 @@ class _viewCharacterState extends State<viewCharacter> {
                                                   context, 'Cancel'),
                                               child: const Text('Cancel'),
                                             ),
+                                            //NOTE ปุ่ม ลบ
                                             TextButton(
                                               onPressed: () {
                                                 snapKey = '${snapshot.key}';
@@ -115,18 +133,7 @@ class _viewCharacterState extends State<viewCharacter> {
                       borderRadius: BorderRadius.circular(10.0),
                     ),
                   ),
-                  onTap: () {
-                    keycharacter = '${snapshot.key}';
-                    // Navigator.pushNamed(
-                    //   context,
-                    //   'addGroup',
-                    //   arguments: sendOneKeyTwoProperty(
-                    //     keycharacter,
-                    //     snapshot.value['nameCharacter'],
-                    //     snapshot.value['urlPicture'],
-                    //   ),
-                    // );
-                  }),
+                  onTap: () {}),
             ),
           );
         },
