@@ -1,0 +1,40 @@
+{
+   "project_info": {
+      "project_number": "145633862884",
+      "firebase_url": "https://db-one-piece-default-rtdb.asia-southeast1.firebasedatabase.app",
+      "project_id": "db-one-piece",
+      "storage_bucket": "db-one-piece.appspot.com"
+   },
+   "client": [
+      {
+         "client_info": {
+            "mobilesdk_app_id": "1:145633862884:android:44f1682c047cd8d5aab8f1",
+            "android_client_info": {
+               "package_name": "com.example.one_piece"
+            }
+         },
+         "oauth_client": [
+            {
+               "client_id": "145633862884-95oibe70kdpd9c7l1llnre155p30f35t.apps.googleusercontent.com",
+               "client_type": 3
+            }
+         ],
+         "api_key": [
+            {
+               "current_key": "AIzaSyDlJqFF0Z7rIjWN2NEwkEq9e2AFRUcT47k"
+            }
+         ],
+         "services": {
+            "appinvite_service": {
+               "other_platform_oauth_client": [
+                  {
+                     "client_id": "145633862884-95oibe70kdpd9c7l1llnre155p30f35t.apps.googleusercontent.com",
+                     "client_type": 3
+                  }
+               ]
+            }
+         }
+      }
+   ],
+   "configuration_version": "1"
+}
