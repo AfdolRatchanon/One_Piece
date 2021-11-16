@@ -20,9 +20,9 @@ class _characterState extends State<character> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: backgroundC,
-      drawer: drawerAppBar(),
+      drawer: checkAuth(),
       appBar: AppBar(
-        title: Text(""),
+        title: Text("Character"),
         backgroundColor: appBarC,
       ),
       body: FirebaseAnimatedList(
@@ -31,7 +31,29 @@ class _characterState extends State<character> {
           return Column(
             children: [
               viewBtn('${snapshot.value['nameCharacter']}',
-                  '${snapshot.value['urlPicture']}', size, 30, () {}),
+                  '${snapshot.value['urlPicture']}', size, 30, () {
+                Navigator.pushNamed(context, 'detail',
+                    arguments: send18Property(
+                      snapshot.value['nameCharacter'],
+                      snapshot.value['urlPicture'],
+                      snapshot.value['nameEng'],
+                      snapshot.value['debut'],
+                      snapshot.value['affiliation'],
+                      snapshot.value['occupation'],
+                      snapshot.value['homeTown'],
+                      snapshot.value['nickname'],
+                      snapshot.value['birthDate'],
+                      snapshot.value['oldYear'],
+                      snapshot.value['hight'],
+                      snapshot.value['gBlood'],
+                      snapshot.value['bounty'],
+                      snapshot.value['status'],
+                      snapshot.value['dFruitEng'],
+                      snapshot.value['dFruitTh'],
+                      snapshot.value['powerFruit'],
+                      snapshot.value['typeFruit'],
+                    ));
+              }),
             ],
           );
         },

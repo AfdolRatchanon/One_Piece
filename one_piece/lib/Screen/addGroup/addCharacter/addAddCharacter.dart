@@ -12,7 +12,6 @@ class addAddCharacter extends StatefulWidget {
 
 class _addAddCharacterState extends State<addAddCharacter> {
   var nameCharacter,
-      urlPicture,
       nameEng,
       debut,
       affiliation,
@@ -29,6 +28,7 @@ class _addAddCharacterState extends State<addAddCharacter> {
       dFruitTh,
       powerFruit,
       typeFruit;
+  var urlPicture = 'null';
   final formKey = GlobalKey<FormState>();
   final dbFirebase = FirebaseDatabase.instance.reference().child('Group');
 
@@ -57,7 +57,7 @@ class _addAddCharacterState extends State<addAddCharacter> {
       showDialog<String>(
         context: context,
         builder: (BuildContext context) => AlertDialog(
-          title: const Text('Add Type Success'),
+          title: const Text('Add Caracter Success'),
           content: const Text('You add Data Success'),
           actions: <Widget>[
             TextButton(
@@ -89,14 +89,6 @@ class _addAddCharacterState extends State<addAddCharacter> {
                   "กรุณากรอกชื่อภาษาไทย",
                   (String? value) {
                     nameCharacter = value!.trim();
-                  },
-                ),
-                txtFmFd(
-                  "Url Picture",
-                  Icon(Icons.image),
-                  "กรุณากรอก Url Picture",
-                  (String? value) {
-                    urlPicture = value!.trim();
                   },
                 ),
                 txtFmFd(

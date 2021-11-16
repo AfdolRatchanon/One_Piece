@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/material.dart';
 import 'package:one_piece/config/constant.dart';
 import 'package:one_piece/models/anyClass.dart';
@@ -15,9 +17,9 @@ class _indexState extends State<index> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: backgroundC,
-      drawer: drawerAppBar(),
+      drawer: testCheckAuth(context, 'index') /*checkAuth()*/,
       appBar: AppBar(
-        title: Text(""),
+        title: Text("Index"),
         backgroundColor: appBarC,
       ),
       body: SingleChildScrollView(

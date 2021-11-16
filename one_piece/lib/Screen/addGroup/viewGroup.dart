@@ -1,5 +1,6 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:one_piece/models/anyClass.dart';
 
@@ -82,10 +83,21 @@ class _viewGroupState extends State<viewGroup> {
                                             ),
                                             TextButton(
                                               onPressed: () => {
-                                                Navigator.pop(context, 'OK'),
-                                                dbFirebase
-                                                    .child(snapshot.key!)
-                                                    .remove(),
+                                                if (snapshot
+                                                        .value['urlPicture'] !=
+                                                    'null')
+                                                  {
+                                                    FirebaseStorage.instance
+                                                        .refFromURL(
+                                                            snapshot.value[
+                                                                'urlPicture'])
+                                                        .delete(),
+                                                    Navigator.pop(
+                                                        context, 'OK'),
+                                                    dbFirebase
+                                                        .child(snapshot.key!)
+                                                        .remove(),
+                                                  }
                                               },
                                               child: const Text('OK'),
                                             ),

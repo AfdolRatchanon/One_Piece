@@ -1,4 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:one_piece/config/constant.dart';
 
 class sendOneKey {
@@ -25,6 +29,47 @@ class sendTwoKeyTwoProperty {
   final String name;
   final String url;
   const sendTwoKeyTwoProperty(this.pKey, this.sKey, this.name, this.url);
+}
+
+class send18Property {
+  final String nameCharacter,
+      urlPicture,
+      nameEng,
+      debut,
+      affiliation,
+      occupation,
+      homeTown,
+      nickname,
+      birthDate,
+      oldYear,
+      hight,
+      gBlood,
+      bounty,
+      status,
+      dFruitEng,
+      dFruitTh,
+      powerFruit,
+      typeFruit;
+  const send18Property(
+    this.nameCharacter,
+    this.urlPicture,
+    this.nameEng,
+    this.debut,
+    this.affiliation,
+    this.occupation,
+    this.homeTown,
+    this.nickname,
+    this.birthDate,
+    this.oldYear,
+    this.hight,
+    this.gBlood,
+    this.bounty,
+    this.status,
+    this.dFruitEng,
+    this.dFruitTh,
+    this.powerFruit,
+    this.typeFruit,
+  );
 }
 
 class sendTwoKey18Property {
@@ -72,18 +117,103 @@ class sendTwoKey18Property {
   );
 }
 
+class sendTwoKey17Property {
+  final String pKey,
+      sKey,
+      nameCharacter,
+      nameEng,
+      debut,
+      affiliation,
+      occupation,
+      homeTown,
+      nickname,
+      birthDate,
+      oldYear,
+      hight,
+      gBlood,
+      bounty,
+      status,
+      dFruitEng,
+      dFruitTh,
+      powerFruit,
+      typeFruit;
+  const sendTwoKey17Property(
+    this.pKey,
+    this.sKey,
+    this.nameCharacter,
+    this.nameEng,
+    this.debut,
+    this.affiliation,
+    this.occupation,
+    this.homeTown,
+    this.nickname,
+    this.birthDate,
+    this.oldYear,
+    this.hight,
+    this.gBlood,
+    this.bounty,
+    this.status,
+    this.dFruitEng,
+    this.dFruitTh,
+    this.powerFruit,
+    this.typeFruit,
+  );
+}
+
+//NOTE checkLogin
+Widget checkAuth() {
+  if (FirebaseAuth.instance.currentUser == null) {
+    return drawerAppBar();
+  } else {
+    //Navigator.pushReplacement();
+    return drawerAppBarLogin();
+  }
+}
+
 Widget drawerAppBar() {
   return Drawer(
     child: ListView(
       children: [
         DrawerHeader(
-          child: Text('User Picture'),
+          child: Text('Not Login User Picture'),
         ),
         ListTile(
-          title: Text("Name"),
+          leading: Icon(
+            Icons.login,
+            color: pColor,
+          ),
+          title: Text("Login"),
+          onTap: () {
+            print('go to login');
+            signInwithGoogle();
+          },
+        ),
+      ],
+    ),
+  );
+}
+
+Widget drawerAppBarLogin() {
+  return Drawer(
+    child: ListView(
+      children: [
+        DrawerHeader(
+          child: Column(
+            children: [
+              CircleAvatar(
+                backgroundImage:
+                    NetworkImage(FirebaseAuth.instance.currentUser!.photoURL!),
+                radius: 30,
+              ),
+              Text(FirebaseAuth.instance.currentUser!.email!),
+            ],
+          ),
         ),
         ListTile(
-          title: Text("Email"),
+          title: Text(FirebaseAuth.instance.currentUser!.displayName!),
+        ),
+        ListTile(
+          title: Text(FirebaseAuth.instance.currentUser!.email!),
         ),
         ListTile(
           title: Text("Logout"),
@@ -91,12 +221,171 @@ Widget drawerAppBar() {
             Icons.logout,
             color: Colors.red,
           ),
+          onTap: () {
+            signOutFromGoogle();
+          },
         ),
       ],
     ),
   );
 }
 
+Future<String?> signInwithGoogle() async {
+  try {
+    final GoogleSignInAccount? googleSignInAccount =
+        await GoogleSignIn().signIn();
+    final GoogleSignInAuthentication googleSignInAuthentication =
+        await googleSignInAccount!.authentication;
+    final AuthCredential credential = GoogleAuthProvider.credential(
+      accessToken: googleSignInAuthentication.accessToken,
+      idToken: googleSignInAuthentication.idToken,
+    );
+    await FirebaseAuth.instance.signInWithCredential(credential);
+  } on FirebaseAuthException catch (e) {
+    print("Exception Firebase Auth");
+    print(e.message);
+    throw e;
+  }
+}
+
+Future<void> signOutFromGoogle() async {
+  await GoogleSignIn().signOut();
+  await FirebaseAuth.instance.signOut();
+}
+
+//REVIEW ทดสอบ refresh Page
+//FIXME
+
+Widget testCheckAuth(context, String routeName) {
+  if (FirebaseAuth.instance.currentUser == null) {
+    return testDrawerAppBar(context, routeName);
+  } else {
+    return drawerAppBarLogin();
+  }
+}
+
+Widget testDrawerAppBar(context, String routeName) {
+  return Drawer(
+    child: ListView(
+      children: [
+        DrawerHeader(
+          child: Text('TestNot Login User'),
+        ),
+        ListTile(
+          leading: Icon(
+            Icons.login,
+            color: pColor,
+          ),
+          title: Text("Login"),
+          onTap: () {
+            print('go to login');
+            testSignInwithGoogle(context, routeName);
+          },
+        ),
+      ],
+    ),
+  );
+}
+
+Widget testDrawerAppBarLogin(context, String routeName) {
+  return Drawer(
+    child: ListView(
+      children: [
+        DrawerHeader(
+          child: Column(
+            children: [
+              CircleAvatar(
+                backgroundImage:
+                    NetworkImage(FirebaseAuth.instance.currentUser!.photoURL!),
+                radius: 30,
+              ),
+              Text(FirebaseAuth.instance.currentUser!.email!),
+            ],
+          ),
+        ),
+        ListTile(
+          title: Text(FirebaseAuth.instance.currentUser!.displayName!),
+        ),
+        ListTile(
+          title: Text(FirebaseAuth.instance.currentUser!.email!),
+        ),
+        ListTile(
+          title: Text("Logout"),
+          leading: Icon(
+            Icons.logout,
+            color: Colors.red,
+          ),
+          onTap: () {
+            testSignOutFromGoogle(context, routeName);
+          },
+        ),
+      ],
+    ),
+  );
+}
+
+Future<void> testSignOutFromGoogle(context, routeName) async {
+  await GoogleSignIn().signOut().then((value) {}).catchError((onError) {});
+  //await FirebaseAuth.instance.signOut();
+  showDialog<String>(
+    context: context,
+    builder: (BuildContext context) => AlertDialog(
+      title: const Text('Logout Success'),
+      content: const Text('Your Logout Google ID Success'),
+      actions: <Widget>[
+        TextButton(
+          onPressed: () {
+            Navigator.pop(context, 'OK');
+            Navigator.pop(context);
+            //Navigator(context, routeName);
+          },
+          child: const Text('OK'),
+        ),
+      ],
+    ),
+  );
+}
+
+Future<String?> testSignInwithGoogle(context, routeName) async {
+  try {
+    final GoogleSignInAccount? googleSignInAccount = await GoogleSignIn()
+        .signIn()
+        .then((value) {})
+        .onError((error, stackTrace) {});
+    /*final GoogleSignInAuthentication googleSignInAuthentication =
+        await googleSignInAccount!.authentication;
+    final AuthCredential credential = GoogleAuthProvider.credential(
+      accessToken: googleSignInAuthentication.accessToken,
+      idToken: googleSignInAuthentication.idToken,*/
+    //);
+    //await FirebaseAuth.instance.signInWithCredential(credential);
+    //FIXME  แก้ refresh หน้า
+    print('login Success');
+    showDialog<String>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: const Text('Login Success'),
+        content: const Text('Your login Google ID Success'),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context, 'OK');
+              Navigator.pop(context);
+              //Navigator(context, routeName);
+            },
+            child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
+  } on FirebaseAuthException catch (e) {
+    print("Exception Firebase Auth");
+    print(e.message);
+    throw e;
+  }
+}
+
+//NOTE Card กดได้
 Widget viewBtn(
     String title, String url, Size size, double fontsize, dynamic on_pressed) {
   return InkWell(
@@ -112,12 +401,23 @@ Widget viewBtn(
             fit: BoxFit.fitHeight,
             height: size.height * 0.30,
           ),
-          Text(
-            title,
-            style: TextStyle(
-              color: LabelWhC,
-              fontSize: fontsize,
-              //backgroundColor: Color.fromRGBO(0, 0, 0, 150),
+          Container(
+            margin: EdgeInsets.all(5),
+            padding: EdgeInsets.all(5),
+            //color: Color.fromRGBO(0, 0, 0, 0.25),
+            decoration: BoxDecoration(
+              color: Color.fromRGBO(0, 0, 0, 0.35),
+              borderRadius: BorderRadius.all(
+                Radius.circular(15),
+              ),
+            ),
+            child: Text(
+              title,
+              style: TextStyle(
+                color: LabelWhC,
+                fontSize: fontsize,
+                //backgroundColor: Color.fromRGBO(0, 0, 0, 150),
+              ),
             ),
           ),
         ],
@@ -131,5 +431,62 @@ Widget viewBtn(
     onTap: () {
       on_pressed();
     },
+  );
+}
+
+Widget containerAndText(String title, String data) {
+  return Container(
+      alignment: Alignment.centerLeft,
+      child: Text(
+        title + data,
+        style: TextStyle(fontSize: 16),
+      ));
+}
+
+//NOTE Text fontSize 16
+Widget textS16(String data) {
+  return Container(
+      alignment: Alignment.centerLeft,
+      child: Text(
+        data,
+        style: TextStyle(fontSize: 16),
+      ));
+}
+
+//NOTE ปุม
+Widget btnOther(color, dynamic onPress, String title) {
+  return ElevatedButton(
+    style: ElevatedButton.styleFrom(
+      primary: color,
+    ),
+    onPressed: onPress,
+    child: Text(title),
+  );
+}
+
+//NOTE textFormFild แบบกำหนดค่าเริ่มต้น
+Widget txtFmFdIv(String title, Icon icon, String hintText, dynamic varOnSave,
+    String initValue) {
+  return Container(
+    margin: EdgeInsets.fromLTRB(10, 20, 10, 10),
+    child: TextFormField(
+        style: TextStyle(
+          fontSize: 24.0,
+          color: pColor,
+        ),
+        decoration: InputDecoration(
+          labelText: title,
+          icon: icon,
+          hintText: hintText,
+        ),
+        validator: (String? value) {
+          if (value!.isEmpty) {
+            return 'กรุณากรอกข้อมูล';
+          } else if (value.length < 1) {
+            return "กรุณากรอกข้อมูลมากกว่า 1 ตัวอักษร";
+          }
+        },
+        onSaved: varOnSave,
+        initialValue: initValue),
   );
 }

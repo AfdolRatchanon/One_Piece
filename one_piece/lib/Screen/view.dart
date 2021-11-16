@@ -19,9 +19,9 @@ class _viewState extends State<view> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: backgroundC,
-      drawer: drawerAppBar(),
+      drawer: testCheckAuth(context, 'view'),
       appBar: AppBar(
-        title: Text(""),
+        title: Text("View"),
         backgroundColor: appBarC,
       ),
       body: FirebaseAnimatedList(

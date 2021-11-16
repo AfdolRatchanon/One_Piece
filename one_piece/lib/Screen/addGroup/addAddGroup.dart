@@ -18,7 +18,7 @@ class _addAddGroupState extends State<addAddGroup> {
   Future<void> createData() async {
     await dbFirebase.push().set({
       'nameGroup': nameGroup,
-      'urlPicture': urlPicture,
+      'urlPicture': 'null',
     }).then((dynamic value) {
       print(value);
       showDialog<String>(
@@ -52,7 +52,7 @@ class _addAddGroupState extends State<addAddGroup> {
             child: Column(
               children: [
                 txtNameGroup(),
-                txtUrlPicture(),
+                //txtUrlPicture(),
                 btnSubmit(),
               ],
             ),

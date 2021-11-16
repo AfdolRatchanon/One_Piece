@@ -12,14 +12,12 @@ class editGroup extends StatefulWidget {
 }
 
 class _editGroupState extends State<editGroup> {
-  Future<void> updateData(
-      String keyType, dynamic db, String nameGroup, String urlPicture) async {
+  Future<void> updateData(String keyGroup, dynamic db, String nameGroup) async {
     //print(nameGroup);
     //print(urlPicture);
     try {
-      await db.child(keyType).update({
+      await db.child(keyGroup).update({
         'nameGroup': nameGroup,
-        'urlPicture': urlPicture,
       }).then((value) {
         showDialog<String>(
           context: context,
@@ -95,44 +93,52 @@ class _editGroupState extends State<editGroup> {
                       },
                       initialValue: dataIn.name.toString(),
                     ),
-                    TextFormField(
-                      style: TextStyle(
-                        fontSize: 24.0,
-                        color: pColor,
-                      ),
-                      decoration: InputDecoration(
-                        labelText: 'Url Picture',
-                        icon: Icon(Icons.edit_attributes_outlined),
-                        hintText: 'Input your urlPicture',
-                      ),
-                      validator: (String? value) {
-                        if (value!.isEmpty) {
-                          return 'กรุณากรอกชื่อปรเเภท';
-                        } else if (value.length < 1) {
-                          return "กรุณากรอกข้อมูลมากกว่า 1 ตัวอักษร";
-                        }
-                      },
-                      onSaved: (String? value) {
-                        urlPicture = value!.trim();
-                      },
-                      initialValue: dataIn.url.toString(),
+                    // TextFormField(
+                    //   style: TextStyle(
+                    //     fontSize: 24.0,
+                    //     color: pColor,
+                    //   ),
+                    //   decoration: InputDecoration(
+                    //     labelText: 'Url Picture',
+                    //     icon: Icon(Icons.edit_attributes_outlined),
+                    //     hintText: 'Input your urlPicture',
+                    //   ),
+                    //   validator: (String? value) {
+                    //     if (value!.isEmpty) {
+                    //       return 'กรุณากรอกชื่อปรเเภท';
+                    //     } else if (value.length < 1) {
+                    //       return "กรุณากรอกข้อมูลมากกว่า 1 ตัวอักษร";
+                    //     }
+                    //   },
+                    //   onSaved: (String? value) {
+                    //     urlPicture = value!.trim();
+                    //   },
+                    //   initialValue: dataIn.url.toString(),
+                    // ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        btnOther(pColor, () {
+                          print("Update");
+                          if (addTypeKey.currentState!.validate()) {
+                            addTypeKey.currentState!.save();
+                            updateData(
+                                dataIn.key.toString(), dbFirebase, nameGroup);
+                            //addTypeKey.currentState!.reset();
+                            //addTypeKey.currentState!.toString();
+                          }
+                        }, "Update"),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        btnOther(sColor, () {
+                          print("Edit Picture");
+                          Navigator.pushNamed(context, 'editPictureGroup',
+                              arguments: sendOneKeyTwoProperty(
+                                  dataIn.key, dataIn.name, dataIn.url));
+                        }, "Edit Picture"),
+                      ],
                     ),
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        primary: pColor,
-                      ),
-                      onPressed: () {
-                        print(dataIn.key.toString());
-                        if (addTypeKey.currentState!.validate()) {
-                          addTypeKey.currentState!.save();
-                          updateData(dataIn.key.toString(), dbFirebase,
-                              nameGroup, urlPicture);
-                          //addTypeKey.currentState!.reset();
-                          //addTypeKey.currentState!.toString();
-                        }
-                      },
-                      child: Text('Update'),
-                    )
                   ],
                 ),
               ),

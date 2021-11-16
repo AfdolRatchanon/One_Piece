@@ -5,3 +5,4 @@ const menuC = Colors.black;
 const pColor = Colors.green;
 const backgroundC = Color(0xFFFFE9D6);
 const LabelWhC = Colors.white;
+const sColor = Colors.deepOrange;

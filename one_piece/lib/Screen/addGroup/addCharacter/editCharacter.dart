@@ -12,32 +12,30 @@ class editCharecter extends StatefulWidget {
 
 class _editCharecterState extends State<editCharecter> {
   Future<void> updateData(
-    String pKey,
-    String sKey,
+    String? pKey,
+    String? sKey,
     dynamic db,
-    String nameCharacter,
-    String urlPicture,
-    String nameEng,
-    String debut,
-    String affiliation,
-    String occupation,
-    String homeTown,
-    String nickname,
-    String birthDate,
-    String oldYear,
-    String hight,
-    String gBlood,
-    String bounty,
-    String status,
-    String dFruitEng,
-    String dFruitTh,
-    String powerFruit,
-    String typeFruit,
+    String? nameCharacter,
+    String? nameEng,
+    String? debut,
+    String? affiliation,
+    String? occupation,
+    String? homeTown,
+    String? nickname,
+    String? birthDate,
+    String? oldYear,
+    String? hight,
+    String? gBlood,
+    String? bounty,
+    String? status,
+    String? dFruitEng,
+    String? dFruitTh,
+    String? powerFruit,
+    String? typeFruit,
   ) async {
     try {
       await db.child(pKey).child('character').child(sKey).update({
         'nameCharacter': nameCharacter,
-        'urlPicture': urlPicture,
         'debut': debut,
         'affiliation': affiliation,
         'nameEng': nameEng,
@@ -124,20 +122,30 @@ class _editCharecterState extends State<editCharecter> {
                   color: LabelWhC,
                   child: Column(
                     children: [
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          primary: sColor,
+                        ),
+                        onPressed: () {
+                          Navigator.pushNamed(
+                            context,
+                            'editPictureCharacter',
+                            arguments: sendTwoKeyTwoProperty(
+                              keyIn.pKey,
+                              keyIn.sKey,
+                              keyIn.nameCharacter,
+                              keyIn.urlPicture,
+                            ),
+                          );
+                        },
+                        child: Text('Upload Picture Character'),
+                      ),
                       txtFmFdIv(
                           "ชื่อภาษาไทย",
                           Icon(Icons.account_circle_outlined),
                           "กรุณากรอกชื่อภาษาไทย", (String? value) {
                         nameCharacter = value!.trim();
                       }, keyIn.nameCharacter.toString()),
-                      txtFmFdIv(
-                          "Url Picture",
-                          Icon(Icons.image),
-                          "กรุณากรอก Url Picture",
-                          (String? value) => {
-                                urlPicture = value!.trim(),
-                              },
-                          keyIn.urlPicture),
                       txtFmFdIv(
                           "ชื่อภาษาอังกฤษ",
                           Icon(Icons.account_circle_outlined),
@@ -224,7 +232,6 @@ class _editCharecterState extends State<editCharecter> {
                                 keyIn.sKey.toString(),
                                 dbFirebase,
                                 nameCharacter,
-                                urlPicture,
                                 nameEng,
                                 debut,
                                 affiliation,
@@ -255,32 +262,6 @@ class _editCharecterState extends State<editCharecter> {
           ],
         ),
       ),
-    );
-  }
-
-  Widget txtFmFdIv(String title, Icon icon, String hintText, dynamic varOnSave,
-      String initValue) {
-    return Container(
-      margin: EdgeInsets.fromLTRB(10, 20, 10, 10),
-      child: TextFormField(
-          style: TextStyle(
-            fontSize: 24.0,
-            color: pColor,
-          ),
-          decoration: InputDecoration(
-            labelText: title,
-            icon: icon,
-            hintText: hintText,
-          ),
-          validator: (String? value) {
-            if (value!.isEmpty) {
-              return 'กรุณากรอกข้อมูล';
-            } else if (value.length < 1) {
-              return "กรุณากรอกข้อมูลมากกว่า 1 ตัวอักษร";
-            }
-          },
-          onSaved: varOnSave,
-          initialValue: initValue),
     );
   }
 }
