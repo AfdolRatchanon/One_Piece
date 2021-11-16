@@ -14,7 +14,9 @@ import 'package:one_piece/Screen/addGroup/viewGroup.dart';
 import 'package:one_piece/Screen/charecter.dart';
 import 'package:one_piece/Screen/detail.dart';
 import 'package:one_piece/Screen/googleLogin.dart';
+import 'package:one_piece/Screen/homePage.dart';
 import 'package:one_piece/Screen/index.dart';
+import 'package:one_piece/Screen/social.dart';
 
 Future<void> main() async {
   // เปิด Connection ไปที่ Firebase
@@ -30,8 +32,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: index(),
+      home: homePage(),
       routes: {
+        'homePage': (context) => homePage(),
         'index': (context) => index(),
         'view': (context) => view(),
         'addGroup': (context) => addGroup(),
@@ -47,6 +50,7 @@ class MyApp extends StatelessWidget {
         'editPictureGroup': (context) => editPictureGroup(),
         'editPictureCharacter': (context) => editPictureCharacter(),
         'googleLogin': (context) => googleLogin(),
+        'social': (context) => social(),
       },
     );
   }

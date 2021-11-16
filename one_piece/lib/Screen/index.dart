@@ -17,7 +17,7 @@ class _indexState extends State<index> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: backgroundC,
-      drawer: testCheckAuth(context, 'index') /*checkAuth()*/,
+      drawer: /*CheckAuth(context, 'index')*/ checkAuth(context, 'homePage'),
       appBar: AppBar(
         title: Text("Index"),
         backgroundColor: appBarC,
@@ -36,15 +36,24 @@ class _indexState extends State<index> {
                   Navigator.pushNamed(context, 'view');
                 },
               ),
-              viewBtn(
-                "แก้ไข",
-                'https://cdn.pixabay.com/photo/2016/08/24/16/20/books-1617327_960_720.jpg',
-                size,
-                50,
-                () {
-                  Navigator.pushNamed(context, 'addGroup');
-                },
-              ),
+              // viewBtn(
+              //   "พูดคุย",
+              //   'https://media.istockphoto.com/photos/party-people-communication-talking-happiness-concept-picture-id668221242',
+              //   size,
+              //   50,
+              //   () {
+              //     Navigator.pushNamed(context, 'addGroup');
+              //   },
+              // ),
+              // viewBtn(
+              //   "แก้ไข",
+              //   'https://cdn.pixabay.com/photo/2016/08/24/16/20/books-1617327_960_720.jpg',
+              //   size,
+              //   50,
+              //   () {
+              //     Navigator.pushNamed(context, 'addGroup');
+              //   },
+              // ),
             ],
           ),
         ),

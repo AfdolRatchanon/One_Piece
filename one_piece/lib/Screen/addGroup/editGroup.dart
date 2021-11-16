@@ -55,7 +55,7 @@ class _editGroupState extends State<editGroup> {
     final dbFirebase = FirebaseDatabase.instance.reference().child('Group');
     return Scaffold(
       backgroundColor: backgroundC,
-      drawer: drawerAppBar(),
+      //drawer: drawerAppBar(),
       appBar: AppBar(
         title: Text(""),
         backgroundColor: appBarC,

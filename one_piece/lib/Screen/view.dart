@@ -19,7 +19,7 @@ class _viewState extends State<view> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: backgroundC,
-      drawer: testCheckAuth(context, 'view'),
+      drawer: /*testCheckAuth(context, 'view')*/ checkAuth(context, 'view'),
       appBar: AppBar(
         title: Text("View"),
         backgroundColor: appBarC,

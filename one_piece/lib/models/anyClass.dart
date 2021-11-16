@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -159,23 +158,13 @@ class sendTwoKey17Property {
     this.typeFruit,
   );
 }
-
-//NOTE checkLogin
-Widget checkAuth() {
-  if (FirebaseAuth.instance.currentUser == null) {
-    return drawerAppBar();
-  } else {
-    //Navigator.pushReplacement();
-    return drawerAppBarLogin();
-  }
-}
-
+/*
 Widget drawerAppBar() {
   return Drawer(
     child: ListView(
       children: [
         DrawerHeader(
-          child: Text('Not Login User Picture'),
+          child: Text('User not login'),
         ),
         ListTile(
           leading: Icon(
@@ -191,9 +180,42 @@ Widget drawerAppBar() {
       ],
     ),
   );
+}*/
+
+//NOTE checkLogin
+Widget checkAuth(context, String routeName) {
+  if (FirebaseAuth.instance.currentUser == null) {
+    return drawerAppBarNotLogin(context, routeName);
+  } else {
+    //Navigator.pushReplacement();
+    return drawerAppBarLogin(context, routeName);
+  }
 }
 
-Widget drawerAppBarLogin() {
+Widget drawerAppBarNotLogin(context, String routeName) {
+  return Drawer(
+    child: ListView(
+      children: [
+        DrawerHeader(
+          child: Text('User not login'),
+        ),
+        ListTile(
+          leading: Icon(
+            Icons.login,
+            color: pColor,
+          ),
+          title: Text("Login"),
+          onTap: () {
+            print('go to login');
+            signInwithGoogle(context, routeName);
+          },
+        ),
+      ],
+    ),
+  );
+}
+
+Widget drawerAppBarLogin(context, String routeName) {
   return Drawer(
     child: ListView(
       children: [
@@ -216,13 +238,19 @@ Widget drawerAppBarLogin() {
           title: Text(FirebaseAuth.instance.currentUser!.email!),
         ),
         ListTile(
+          title: Text("แก้ไขข้อมูล"),
+          onTap: () {
+            Navigator.pushNamed(context, 'addGroup');
+          },
+        ),
+        ListTile(
           title: Text("Logout"),
           leading: Icon(
             Icons.logout,
             color: Colors.red,
           ),
           onTap: () {
-            signOutFromGoogle();
+            signOutFromGoogle(context, routeName);
           },
         ),
       ],
@@ -230,6 +258,32 @@ Widget drawerAppBarLogin() {
   );
 }
 
+Future<String?> signInwithGoogle(context, String routeName) async {
+  try {
+    final GoogleSignInAccount? googleSignInAccount =
+        await GoogleSignIn().signIn();
+    final GoogleSignInAuthentication googleSignInAuthentication =
+        await googleSignInAccount!.authentication;
+    final AuthCredential credential = GoogleAuthProvider.credential(
+      accessToken: googleSignInAuthentication.accessToken,
+      idToken: googleSignInAuthentication.idToken,
+    );
+    await FirebaseAuth.instance.signInWithCredential(credential);
+    Navigator.pushNamedAndRemoveUntil(context, routeName, (route) => false);
+  } on FirebaseAuthException catch (e) {
+    print("Exception Firebase Auth");
+    print(e.message);
+    throw e;
+  }
+}
+
+Future<void> signOutFromGoogle(context, String routeName) async {
+  await GoogleSignIn().signOut();
+  await FirebaseAuth.instance.signOut();
+  Navigator.pushNamedAndRemoveUntil(context, routeName, (route) => false);
+}
+
+/*
 Future<String?> signInwithGoogle() async {
   try {
     final GoogleSignInAccount? googleSignInAccount =
@@ -252,138 +306,7 @@ Future<void> signOutFromGoogle() async {
   await GoogleSignIn().signOut();
   await FirebaseAuth.instance.signOut();
 }
-
-//REVIEW ทดสอบ refresh Page
-//FIXME
-
-Widget testCheckAuth(context, String routeName) {
-  if (FirebaseAuth.instance.currentUser == null) {
-    return testDrawerAppBar(context, routeName);
-  } else {
-    return drawerAppBarLogin();
-  }
-}
-
-Widget testDrawerAppBar(context, String routeName) {
-  return Drawer(
-    child: ListView(
-      children: [
-        DrawerHeader(
-          child: Text('TestNot Login User'),
-        ),
-        ListTile(
-          leading: Icon(
-            Icons.login,
-            color: pColor,
-          ),
-          title: Text("Login"),
-          onTap: () {
-            print('go to login');
-            testSignInwithGoogle(context, routeName);
-          },
-        ),
-      ],
-    ),
-  );
-}
-
-Widget testDrawerAppBarLogin(context, String routeName) {
-  return Drawer(
-    child: ListView(
-      children: [
-        DrawerHeader(
-          child: Column(
-            children: [
-              CircleAvatar(
-                backgroundImage:
-                    NetworkImage(FirebaseAuth.instance.currentUser!.photoURL!),
-                radius: 30,
-              ),
-              Text(FirebaseAuth.instance.currentUser!.email!),
-            ],
-          ),
-        ),
-        ListTile(
-          title: Text(FirebaseAuth.instance.currentUser!.displayName!),
-        ),
-        ListTile(
-          title: Text(FirebaseAuth.instance.currentUser!.email!),
-        ),
-        ListTile(
-          title: Text("Logout"),
-          leading: Icon(
-            Icons.logout,
-            color: Colors.red,
-          ),
-          onTap: () {
-            testSignOutFromGoogle(context, routeName);
-          },
-        ),
-      ],
-    ),
-  );
-}
-
-Future<void> testSignOutFromGoogle(context, routeName) async {
-  await GoogleSignIn().signOut().then((value) {}).catchError((onError) {});
-  //await FirebaseAuth.instance.signOut();
-  showDialog<String>(
-    context: context,
-    builder: (BuildContext context) => AlertDialog(
-      title: const Text('Logout Success'),
-      content: const Text('Your Logout Google ID Success'),
-      actions: <Widget>[
-        TextButton(
-          onPressed: () {
-            Navigator.pop(context, 'OK');
-            Navigator.pop(context);
-            //Navigator(context, routeName);
-          },
-          child: const Text('OK'),
-        ),
-      ],
-    ),
-  );
-}
-
-Future<String?> testSignInwithGoogle(context, routeName) async {
-  try {
-    final GoogleSignInAccount? googleSignInAccount = await GoogleSignIn()
-        .signIn()
-        .then((value) {})
-        .onError((error, stackTrace) {});
-    /*final GoogleSignInAuthentication googleSignInAuthentication =
-        await googleSignInAccount!.authentication;
-    final AuthCredential credential = GoogleAuthProvider.credential(
-      accessToken: googleSignInAuthentication.accessToken,
-      idToken: googleSignInAuthentication.idToken,*/
-    //);
-    //await FirebaseAuth.instance.signInWithCredential(credential);
-    //FIXME  แก้ refresh หน้า
-    print('login Success');
-    showDialog<String>(
-      context: context,
-      builder: (BuildContext context) => AlertDialog(
-        title: const Text('Login Success'),
-        content: const Text('Your login Google ID Success'),
-        actions: <Widget>[
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context, 'OK');
-              Navigator.pop(context);
-              //Navigator(context, routeName);
-            },
-            child: const Text('OK'),
-          ),
-        ],
-      ),
-    );
-  } on FirebaseAuthException catch (e) {
-    print("Exception Firebase Auth");
-    print(e.message);
-    throw e;
-  }
-}
+*/
 
 //NOTE Card กดได้
 Widget viewBtn(
@@ -461,6 +384,22 @@ Widget btnOther(color, dynamic onPress, String title) {
     ),
     onPressed: onPress,
     child: Text(title),
+  );
+}
+
+Widget btnOtherSize(
+    color, dynamic onPress, String title, double fontSize, double padding) {
+  return ElevatedButton(
+    style: ElevatedButton.styleFrom(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
+      padding: EdgeInsets.all(padding),
+      primary: color,
+    ),
+    onPressed: onPress,
+    child: Text(
+      title,
+      style: TextStyle(fontSize: fontSize),
+    ),
   );
 }
 

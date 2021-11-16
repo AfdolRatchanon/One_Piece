@@ -127,7 +127,7 @@ class _editPictureGroupState extends State<editPictureGroup> {
         ModalRoute.of(context)!.settings.arguments as sendOneKeyTwoProperty;
     return Scaffold(
       backgroundColor: backgroundC,
-      drawer: drawerAppBar(),
+      //drawer: drawerAppBar(),
       appBar: AppBar(
         title: Text("Edit Picture Group"),
         backgroundColor: appBarC,

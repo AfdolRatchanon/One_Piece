@@ -20,7 +20,8 @@ class _characterState extends State<character> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: backgroundC,
-      drawer: checkAuth(),
+      drawer: /*testCheckAuth(context, 'character')*/ checkAuth(
+          context, 'homePage'),
       appBar: AppBar(
         title: Text("Character"),
         backgroundColor: appBarC,

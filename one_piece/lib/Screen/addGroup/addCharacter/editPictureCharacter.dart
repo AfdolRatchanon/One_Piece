@@ -132,7 +132,7 @@ class _editPictureCharacterState extends State<editPictureCharacter> {
         ModalRoute.of(context)!.settings.arguments as sendTwoKeyTwoProperty;
     return Scaffold(
       backgroundColor: backgroundC,
-      drawer: drawerAppBar(),
+      //drawer: drawerAppBar(),
       appBar: AppBar(
         title: Text("Edit Picture Group"),
         backgroundColor: appBarC,

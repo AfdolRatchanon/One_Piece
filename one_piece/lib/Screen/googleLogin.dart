@@ -12,15 +12,25 @@ class googleLogin extends StatefulWidget {
 class _googleLoginState extends State<googleLogin> {
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: backgroundC,
-      drawer: checkAuth(),
       appBar: AppBar(
-        title: Text(""),
+        title: Text("Login"),
         backgroundColor: appBarC,
       ),
-      body: Container(
-        child: Text("Google Login"),
+      body: SingleChildScrollView(
+        child: Container(
+          alignment: Alignment.center,
+          child: Column(
+            children: [
+              btnOtherSize(pColor, () {
+                signInwithGoogle(context, 'homePage');
+                //Navigator.pushNamed(context, routeName)
+              }, "login Google Email ", 20, 20),
+            ],
+          ),
+        ),
       ),
     );
   }

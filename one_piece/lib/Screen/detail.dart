@@ -16,7 +16,8 @@ class _detailState extends State<detail> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: backgroundC,
-      drawer: checkAuth(),
+      drawer: /*testCheckAuth(context, 'detail')*/ checkAuth(
+          context, 'homePage'),
       appBar: AppBar(
         title: Text("Detail"),
         backgroundColor: appBarC,
