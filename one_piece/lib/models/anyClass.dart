@@ -269,7 +269,9 @@ Future<String?> signInwithGoogle(context, String routeName) async {
       idToken: googleSignInAuthentication.idToken,
     );
     await FirebaseAuth.instance.signInWithCredential(credential);
-    Navigator.pushNamedAndRemoveUntil(context, routeName, (route) => false);
+    await Navigator.pushNamedAndRemoveUntil(
+        context, routeName, (route) => false);
+    await Navigator.pushNamed(context, 'index');
   } on FirebaseAuthException catch (e) {
     print("Exception Firebase Auth");
     print(e.message);
@@ -280,7 +282,8 @@ Future<String?> signInwithGoogle(context, String routeName) async {
 Future<void> signOutFromGoogle(context, String routeName) async {
   await GoogleSignIn().signOut();
   await FirebaseAuth.instance.signOut();
-  Navigator.pushNamedAndRemoveUntil(context, routeName, (route) => false);
+  await Navigator.pushNamedAndRemoveUntil(context, routeName, (route) => false);
+  await Navigator.pushNamed(context, 'index');
 }
 
 /*
@@ -354,6 +357,31 @@ Widget viewBtn(
     onTap: () {
       on_pressed();
     },
+  );
+}
+
+Widget cardImg(
+  String url,
+  Size size,
+) {
+  return Card(
+    semanticContainer: true,
+    clipBehavior: Clip.antiAliasWithSaveLayer,
+    child: Stack(
+      alignment: Alignment.bottomRight,
+      children: [
+        Image.network(
+          url,
+          fit: BoxFit.fitHeight,
+          height: size.height * 0.45,
+        ),
+      ],
+    ),
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(15.0),
+    ),
+    elevation: 5,
+    margin: EdgeInsets.all(15),
   );
 }
 

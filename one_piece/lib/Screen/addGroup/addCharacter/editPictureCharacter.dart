@@ -159,9 +159,23 @@ class _editPictureCharacterState extends State<editPictureCharacter> {
             Center(
               child: file == null
                   ? Text('Not Found')
-                  : Image.file(
-                      file,
-                      scale: 5,
+                  : Card(
+                      semanticContainer: true,
+                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                      child: Stack(
+                        alignment: Alignment.bottomRight,
+                        children: [
+                          Image.file(
+                            file,
+                            //scale: 5,
+                          ),
+                        ],
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
+                      elevation: 5,
+                      margin: EdgeInsets.all(15),
                     ),
             ),
             btnOther(pColor, () {
