@@ -17,7 +17,7 @@ class _indexState extends State<index> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: backgroundC,
-      drawer: /*CheckAuth(context, 'index')*/ checkAuth(context, 'homePage'),
+      drawer: /*CheckAuth(context, 'index')*/ checkAuth(context, 'index'),
       appBar: AppBar(
         title: Text("Index"),
         backgroundColor: appBarC,

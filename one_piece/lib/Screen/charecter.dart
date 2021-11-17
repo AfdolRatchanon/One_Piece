@@ -21,7 +21,7 @@ class _characterState extends State<character> {
     return Scaffold(
       backgroundColor: backgroundC,
       drawer: /*testCheckAuth(context, 'character')*/ checkAuth(
-          context, 'homePage'),
+          context, 'character'),
       appBar: AppBar(
         title: Text("Character"),
         backgroundColor: appBarC,
